@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study - Learn Smart, Study Hard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-container">
+            <div class="app-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1 class="app-title">Smart Study</h1>
+            <p class="app-tagline">Learn Smart, Study Hard</p>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page hidden">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Smart Study</h1>
+                <p>Welcome Back, Student!</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+
+            <div class="login-footer">
+                <p>Don't have an account? <a href="#">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="mainApp" class="main-app hidden">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="greeting">Hello, <span id="userName">Student</span>!</h1>
+                <div class="header-icons">
+                    <button id="darkModeToggle" class="icon-btn" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="icon-btn" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <div id="homePage" class="page-content active">
+                <!-- Motivational Quote Section -->
+                <div class="quote-section">
+                    <div class="quote-card">
+                        <p id="dailyQuote" class="quote-text">"Success is the sum of small efforts repeated day in and day out."</p>
+                        <p class="quote-author">- Robert Collier</p>
+                        <button id="newQuoteBtn" class="btn-quote">
+                            <i class="fas fa-sync"></i> New Quote
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <h3>Today's Progress</h3>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span id="studyProgress">0</span>%
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p class="progress-text">Keep going! You're doing great!</p>
+                    </div>
+                </div>
+
+                <!-- Subject Cards -->
+                <div class="subjects-section">
+                    <h3>Study Subjects</h3>
+                    <div class="subjects-grid">
+                        <div class="subject-card" data-subject="Math">
+                            <div class="subject-icon">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <h4>Math</h4>
+                            <p class="subject-time">45 min</p>
+                        </div>
+                        <div class="subject-card" data-subject="Science">
+                            <div class="subject-icon">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <h4>Science</h4>
+                            <p class="subject-time">60 min</p>
+                        </div>
+                        <div class="subject-card" data-subject="English">
+                            <div class="subject-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <h4>English</h4>
+                            <p class="subject-time">30 min</p>
+                        </div>
+                        <div class="subject-card" data-subject="SST">
+                            <div class="subject-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <h4>SST</h4>
+                            <p class="subject-time">50 min</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="app.navigateTo('notes')">
+                            <i class="fas fa-sticky-note"></i>
+                            <span>Notes</span>
+                        </button>
+                        <button class="action-btn" onclick="app.navigateTo('routine')">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Routine</span>
+                        </button>
+                        <button class="action-btn" onclick="app.navigateTo('tasks')">
+                            <i class="fas fa-tasks"></i>
+                            <span>Tasks</span>
+                        </button>
+                        <button class="action-btn" onclick="app.navigateTo('quiz')">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Quiz</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes Page -->
+            <div id="notesPage" class="page-content">
+                <div class="page-header">
+                    <h2>My Notes</h2>
+                    <button class="btn-icon" onclick="app.openNoteModal()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="notes-container" id="notesContainer">
+                    <!-- Notes will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Study Routine Page -->
+            <div id="routinePage" class="page-content">
+                <div class="page-header">
+                    <h2>Daily Study Routine</h2>
+                    <button class="btn-icon" onclick="app.openRoutineModal()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="routine-container" id="routineContainer">
+                    <!-- Routine items will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Tasks Page -->
+            <div id="tasksPage" class="page-content">
+                <div class="page-header">
+                    <h2>To-Do Tasks</h2>
+                    <button class="btn-icon" onclick="app.openTaskModal()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="tasks-container">
+                    <div class="task-input-group">
+                        <input type="text" id="taskInput" placeholder="Add a new task..." class="task-input">
+                        <button onclick="app.addTask()" class="btn-add-task">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="tasks-list" id="tasksList">
+                        <!-- Tasks will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Page -->
+            <div id="quizPage" class="page-content">
+                <div class="page-header">
+                    <h2>Quiz Section</h2>
+                </div>
+
+                <div id="quizContainer" class="quiz-container">
+                    <!-- Quiz content will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profilePage" class="page-content">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h2 id="profileName">Student Name</h2>
+                        <p class="profile-email" id="profileEmail">student@email.com</p>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">45</div>
+                            <div class="stat-label">Total Notes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">32</div>
+                            <div class="stat-label">Tasks Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">18</div>
+                            <div class="stat-label">Quizzes Taken</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-achievements">
+                        <h3>Achievements</h3>
+                        <div class="achievements-grid">
+                            <div class="achievement-badge">
+                                <i class="fas fa-star"></i>
+                                <p>First Note</p>
+                            </div>
+                            <div class="achievement-badge">
+                                <i class="fas fa-fire"></i>
+                                <p>7-Day Streak</p>
+                            </div>
+                            <div class="achievement-badge">
+                                <i class="fas fa-trophy"></i>
+                                <p>Quiz Master</p>
+                            </div>
+                            <div class="achievement-badge">
+                                <i class="fas fa-target"></i>
+                                <p>Goal Getter</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settingsPage" class="page-content">
+                <div class="settings-container">
+                    <h2>Settings</h2>
+
+                    <div class="settings-section">
+                        <h3>Preferences</h3>
+                        <div class="setting-item">
+                            <label for="soundToggle">Sound Effects</label>
+                            <input type="checkbox" id="soundToggle" checked>
+                        </div>
+                        <div class="setting-item">
+                            <label for="notificationsToggle">Notifications</label>
+                            <input type="checkbox" id="notificationsToggle" checked>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Study Settings</h3>
+                        <div class="setting-item">
+                            <label for="timerDuration">Timer Duration (minutes)</label>
+                            <input type="number" id="timerDuration" value="25" min="1" max="120">
+                        </div>
+                        <div class="setting-item">
+                            <label for="breakDuration">Break Duration (minutes)</label>
+                            <input type="number" id="breakDuration" value="5" min="1" max="60">
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Account</h3>
+                        <button class="btn-logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="app.navigateTo('home')">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-btn" onclick="app.navigateTo('notes')">
+                <i class="fas fa-sticky-note"></i>
+                <span>Notes</span>
+            </button>
+            <button class="nav-btn" onclick="app.navigateTo('quiz')">
+                <i class="fas fa-question-circle"></i>
+                <span>Quiz</span>
+            </button>
+            <button class="nav-btn" onclick="app.navigateTo('profile')">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </button>
+            <button class="nav-btn" onclick="app.navigateTo('settings')">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Modals -->
+    <!-- Note Modal -->
+    <div id="noteModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Note</h3>
+                <button class="modal-close" onclick="app.closeNoteModal()">&times;</button>
+            </div>
+            <form id="noteForm" onsubmit="app.saveNote(event)">
+                <input type="text" id="noteTitle" placeholder="Note Title" required>
+                <select id="noteSubject" required>
+                    <option value="">Select Subject</option>
+                    <option value="Math">Math</option>
+                    <option value="Science">Science</option>
+                    <option value="English">English</option>
+                    <option value="SST">SST</option>
+                </select>
+                <textarea id="noteContent" placeholder="Write your notes here..." required></textarea>
+                <button type="submit" class="btn-primary">Save Note</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Routine Modal -->
+    <div id="routineModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Study Routine</h3>
+                <button class="modal-close" onclick="app.closeRoutineModal()">&times;</button>
+            </div>
+            <form id="routineForm" onsubmit="app.saveRoutine(event)">
+                <input type="text" id="routineSubject" placeholder="Subject" required>
+                <input type="time" id="routineTime" required>
+                <input type="number" id="routineDuration" placeholder="Duration (minutes)" required>
+                <button type="submit" class="btn-primary">Add Routine</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Timer Modal -->
+    <div id="timerModal" class="modal hidden">
+        <div class="modal-content timer-content">
+            <div class="modal-header">
+                <h3>Study Timer</h3>
+                <button class="modal-close" onclick="app.closeTimerModal()">&times;</button>
+            </div>
+            <div class="timer-display">
+                <div class="timer-circle">
+                    <span id="timerDisplay">25:00</span>
+                </div>
+            </div>
+            <div class="timer-controls">
+                <button id="startTimerBtn" onclick="app.startTimer()" class="btn-primary">
+                    <i class="fas fa-play"></i> Start
+                </button>
+                <button id="pauseTimerBtn" onclick="app.pauseTimer()" class="btn-secondary hidden">
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+                <button onclick="app.resetTimer()" class="btn-secondary">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
